@@ -1,6 +1,6 @@
 # WIP: SideWinder X4 Pro custom firmware
 
-This document shows how the Artillery Sidewinder X4 Pro can be equipped with the latest Klipper version. In addition, problems with the WLAN or the Klipper connection can be resolved.
+This document shows how the Artillery Sidewinder X4 Pro can be equipped with the latest Klipper version. In addition, problems with the wifi or the Klipper connection can be resolved.
 
 DISCLAIMER: These instructions should only be followed if you have technical knowledge. I am not liable for any damage caused to a device as a result. There is currently no Artillery firmware available for download and it is not known how to reflash it. Every step must therefore be taken with caution!
 
