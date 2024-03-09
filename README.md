@@ -1,4 +1,4 @@
-# SideWinder X4 Pro
+# WIP: SideWinder X4 Pro custom firmware
 
 This document shows how the Artillery Sidewinder X4 Pro can be equipped with the latest Klipper version. In addition, problems with the WLAN or the Klipper connection can be resolved.
 
