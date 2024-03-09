@@ -39,9 +39,9 @@ FR_net_wifi_key='MyWiFiKEY'
 FR_net_wifi_countrycode='MyCountyCode'
 ```
 Now save the changes and rename the file to `armbian_first_run.txt`
-Go to the folder `dtb\rockchip` and replace the file `rk3328-roc-cc.dtb` (**Note**: Be sure to use the **.dtb** file and not the .dts file unless you know what you are doing) with the one from this repo. 
+Go to the folder `dtb\rockchip` and replace the file `rk3328-roc-cc.dtb` with the one from this repo (**Note**: Be sure to use the **.dtb** file and not the .dts file unless you know what you are doing). 
 
-Now your printer is ready to start for the first time. Install the EMMC and start the printer. Then wait a little and check via your router which IP address the printer has been assigned.
+Now your printer is ready to start for the first time. Install the EMMC and start the printer. Then wait a little and check via your router which IP address the printer has.
 
 ## Configuration
 
