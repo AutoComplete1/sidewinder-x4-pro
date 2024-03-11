@@ -84,6 +84,7 @@ Now select `Install` (1) and then enter the numbers 1 (`Klipper`), 2 (`Moonraker
 Once Klipper, Moonraker, and Mainsail have been installed, we can proceed to update the firmware on the printer board. To do this, you first need to put the STM32F401 on the board into DFU mode. This is achieved by briefly pressing the `H-RST button` on the mainboard. Afterward, the the SSH connection will be closed and the printer restarts.
 
 ![Mainboard H-RST Button](https://i.imgur.com/ysIb2z8.png)
+
 Now you can check whether DFU mode is active. To do this, enter `lsusb`. One of the entries should be this:
 ```
 Bus 001 Device 002: ID 0483:df11 STMicroelectronics STM Device in DFU Mode
