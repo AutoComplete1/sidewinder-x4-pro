@@ -1,4 +1,4 @@
-# WIP: SideWinder X4 Pro custom firmware
+# WIP: SideWinder X4 Pro
 
 This document shows how the Artillery Sidewinder X4 Pro can be equipped with the latest Klipper version. In addition, problems with the wifi or the Klipper connection can be resolved.
 
@@ -39,11 +39,11 @@ FR_net_wifi_key='MyWiFiKEY'
 FR_net_wifi_countrycode='MyCountyCode'
 ```
 Now save the changes and rename the file to `armbian_first_run.txt`
-Go to the folder `dtb\rockchip` and replace the file `rk3328-roc-cc.dtb` with the one from this repo (**Note**: Be sure to use the **.dtb** file and not the .dts file unless you know what you are doing). 
+Go to the folder `dtb\rockchip` and replace the file `rk3328-roc-cc.dtb`  with the one from this repo (**Note**: Be sure to use the **.dtb** file and not the .dts file unless you know what you are doing). 
 
 Now your printer is ready to start for the first time. Install the EMMC and start the printer. Then wait a little and check via your router which IP address the printer has.
 
-## Configuration
+## Armbian Configuration
 
 Open PuTTY or another SSH program and connect to the IP. Log in with `root` and `1234`. Now go through the setup wizard.
 Now update all packages with `apt update && apt upgrade`.
@@ -81,7 +81,61 @@ Run Kiauh
 Now select `Install` (1) and then enter the numbers 1 (`Klipper`), 2 (`Moonraker`) and 3 (`Mainsail`) one after the other. 
 > Note: the numbers can change with updates, so check that you are installing the correct one.
 
-Once Klipper, Moonraker and Mainsail have been installed, we can take care of the firmware on the printer board. To do this, go back to the main menu of Kiauh (B) and select `Advanced` (4). In the Advanced menu, select `Build + Flash` (4). Apply the following settings in the command prompt:
+Once Klipper, Moonraker, and Mainsail have been installed, we can proceed to update the firmware on the printer board. To do this, you first need to put the STM32F401 on the board into DFU mode. This is achieved by briefly pressing the `H-RST button` on the mainboard. Afterward, the the SSH connection will be closed and the printer restarts.
 
-Then press Q and Y to save the settings. The build should now run.
-After the build is complete, always select 1 for all subsequent command prompts. Make sure that you select `stm32f401xc` for the MCU.
+![Mainboard H-RST Button](https://i.imgur.com/ysIb2z8.png)
+Now you can check whether DFU mode is active. To do this, enter `lsusb`. One of the entries should be this:
+```
+Bus 001 Device 002: ID 0483:df11 STMicroelectronics STM Device in DFU Mode
+```
+> Note: If the entry is listed, you have to try again. Without DFU mode we cannot flash the chip
+
+Next we install our bootloader.
+```
+cd ~
+git clone https://github.com/Arksine/katapult
+```
+Install pyserial
+```
+sudo apt install python3-serial
+```
+Create the firmware
+```
+cd katapult
+make menuconfig
+```
+![Bootloader config](https://i.imgur.com/mAyfBTM.png)
+Exit using `Q`  and confirm with `Y`
+Now build and flash the firmware
+```
+make clean
+make
+sudo dfu-util -a 0 -D ~/katapult/out/katapult.bin --dfuse-address 0x08000000:force:mass-erase:leave -d 0483:df11
+```
+In order to flash the Klipper firmware we have to activate the DFU mode again. To do this, press the `H-RST` button again. Then we can build the Klipper firmware.
+```
+cd ~
+./kiauh/kiauh.sh
+```
+Select `4 [Advanced]` and `4 [Build + Flash]`
+![Klipper firmware config](https://i.imgur.com/qXt8uVz.png)
+Exit using `Q`  and confirm with `Y`
+Now always choose number `1`. Make sure that "Flashing successfull" is displayed in green at the end.
+
+
+## Printer Configuration
+This part is still a work in progress. Use the current printer.cfg from Artillery here, but comment out the following:
+```
+#[mcu rpi]
+#serial: /tmp/klipper_host_mcu
+
+#[adxl345]
+#cs_pin: rpi:None
+#spi_bus: spidev0.0
+#axes_map: x, z, -y
+
+#[resonance_tester]
+#accel_chip: adxl345
+#probe_points:
+#    100, 100, 20  # an example
+```
