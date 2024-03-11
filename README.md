@@ -105,6 +105,7 @@ cd katapult
 make menuconfig
 ```
 ![Bootloader config](https://i.imgur.com/mAyfBTM.png)
+
 Exit using `Q`  and confirm with `Y`
 Now build and flash the firmware
 ```
@@ -118,7 +119,9 @@ cd ~
 ./kiauh/kiauh.sh
 ```
 Select `4 [Advanced]` and `4 [Build + Flash]`
+
 ![Klipper firmware config](https://i.imgur.com/qXt8uVz.png)
+
 Exit using `Q`  and confirm with `Y`
 Now always choose number `1`. Make sure that "Flashing successfull" is displayed in green at the end.
 
