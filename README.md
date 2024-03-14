@@ -1,4 +1,4 @@
-# WIP: SideWinder X4 Pro
+# WIP: Artillery SideWinder X4 Pro custom firmware
 
 This document shows how the Artillery Sidewinder X4 Pro can be equipped with the latest Klipper version. In addition, problems with the wifi or the Klipper connection can be resolved.
 
@@ -55,6 +55,8 @@ The kept packages can now be installed.
 ```
 apt-get --with-new-pkgs upgrade <list of packages kept back>
 ```
+> Note: If this command does not work for you, you can also make the updates via `armbian-config`
+
 After the packages have been installed, we need to copy our **.dtb** file back into the correct directory.
 ```
 cd && cp rk3328-roc-cc.dtb /boot/dtb/rockchip/rk3328-roc-cc.dtb
@@ -114,7 +116,7 @@ make clean
 make
 sudo dfu-util -a 0 -D ~/katapult/out/katapult.bin --dfuse-address 0x08000000:force:mass-erase:leave -d 0483:df11
 ```
-In order to flash the Klipper firmware we have to activate the DFU mode again. To do this, press the `H-RST` button again. Then we can build the Klipper firmware.
+Then we can build the Klipper firmware.
 ```
 cd ~
 ./kiauh/kiauh.sh
